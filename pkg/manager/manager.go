@@ -14,7 +14,6 @@ import (
 	"strconv"
 	"sync"
 	"time"
-	"unsafe"
 
 	policyAPI "github.com/onosproject/onos-a1-dm/go/policy_schemas/traffic_steering_preference/v2"
 	topoAPI "github.com/onosproject/onos-api/go/onos/topo"
@@ -171,7 +170,7 @@ func (m *Manager) updatePolicies(ctx context.Context, policyMap map[string][]byt
 					info = info + ", "
 				}
 				ue := *policyObject.API.Scope.UeID
-				new_ue := unsafe.Pointer(ue)
+				new_ue := ue
 				for i := 0; i < len(ue); i++ {
 					if ue[i:i+1] == "0" {
 						new_ue = ue[i+1:]
