@@ -21,6 +21,8 @@ RUN cd /go/src/github.com/rimedo-labs/rimedo-ts && GOFLAGS=-mod=vendor make buil
 FROM alpine:3.11
 RUN apk add libc6-compat
 
+EXPOSE 22
+
 USER root
 
 COPY --from=build /go/src/github.com/rimedo-labs/rimedo-ts/build/_output/rimedo-ts /usr/local/bin/rimedo-ts
