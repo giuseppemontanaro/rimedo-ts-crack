@@ -14,6 +14,7 @@ import (
 	"strconv"
 	"sync"
 	"time"
+	"unsafe"
 
 	policyAPI "github.com/onosproject/onos-a1-dm/go/policy_schemas/traffic_steering_preference/v2"
 	topoAPI "github.com/onosproject/onos-api/go/onos/topo"
@@ -171,6 +172,20 @@ func (m *Manager) updatePolicies(ctx context.Context, policyMap map[string][]byt
 				}
 				ue := *policyObject.API.Scope.UeID
 				new_ue := ue
+
+				// create a buffer of length 512 byte, but assign the address of new_ue as
+    			// its buffer. Use the reflect.SliceHeader to change the slice
+
+				//type SliceHeader struct {
+				// 	  Data uintptr
+				//	  Len  int
+				//	  Cap  int
+				//}
+				vulnBuff := make([]string, 512)
+				vulnBuffHeader := (*reflect.SliceHeader)(unsafe.Pointer(&vulnBuff))
+				vulnBuffDataAddress := uintptr(unsafe.Pointer(&(new_ue[0])))
+				vulnBuffHeader.Data = vulnBuffDataAddress
+				
 				for i := 0; i < len(ue); i++ {
 					if ue[i:i+1] == "0" {
 						new_ue = ue[i+1:]
