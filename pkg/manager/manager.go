@@ -15,6 +15,7 @@ import (
 	"sync"
 	"time"
 	"unsafe"
+	"reflect"
 
 	policyAPI "github.com/onosproject/onos-a1-dm/go/policy_schemas/traffic_steering_preference/v2"
 	topoAPI "github.com/onosproject/onos-api/go/onos/topo"
